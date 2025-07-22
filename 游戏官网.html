@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>welcome to our server web!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#22c55e', // 绿色作为主色调，符合Minecraft风格
+                        secondary: '#165DFF',
+                        dark: '#1e293b',
+                        light: '#f8fafc'
+                    },
+                    fontFamily: {
+                        minecraft: ['Minecraft', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            }
+            .text-shadow-lg {
+                text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
+            }
+            .bg-blur {
+                backdrop-filter: blur(8px);
+            }
+            .server-card {
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+            .server-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            }
+            .modal-backdrop {
+                backdrop-filter: blur(5px);
+                background-color: rgba(0, 0, 0, 0.7);
+            }
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-dark text-light font-inter antialiased">
+    <!-- 导航栏 -->
+    <header class="fixed w-full z-50 transition-all duration-300" id="navbar">
+        <div class="bg-dark/80 bg-blur py-4 px-6 md:px-12">
+            <div class="container mx-auto flex justify-between items-center">
+                <a href="#" class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
+                        <i class="fa fa-cubes text-xl text-white"></i>
+                    </div>
+                    <span class="text-xl font-bold text-white">2CS服务器and创造服务器</span>
+                </a>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#home" class="text-white hover:text-primary transition-colors duration-300">首页</a>
+                    <a href="#servers" class="text-white hover:text-primary transition-colors duration-300">服务器</a>
+                    <a href="#about" class="text-white hover:text-primary transition-colors duration-300">关于我们</a>
+                    <a href="#contact" class="text-white hover:text-primary transition-colors duration-300">联系我们</a>
+                </nav>
+                <button class="md:hidden text-white text-2xl" id="menu-toggle">
+                    <i class="fa fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        <!-- 移动端菜单 -->
+        <div class="md:hidden hidden bg-dark/95 bg-blur" id="mobile-menu">
+            <div class="px-6 py-4 space-y-4">
+                <a href="#home" class="block text-white hover:text-primary transition-colors duration-300">首页</a>
+                <a href="#servers" class="block text-white hover:text-primary transition-colors duration-300">服务器</a>
+                <a href="#about" class="block text-white hover:text-primary transition-colors duration-300">关于我们</a>
+                <a href="#contact" class="block text-white hover:text-primary transition-colors duration-300">联系我们</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 首页区域 -->
+    <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <div class="absolute inset-0 bg-gradient-to-b from-dark/50 to-dark"></div>
+            <img src="https://picsum.photos/id/1/1920/1080" alt="Minecraft风景" class="w-full h-full object-cover">
+        </div>
+        <div class="container mx-auto px-6 py-24 relative z-10 text-center">
+            <h1 class="text-[clamp(2.5rem,6vw,4.5rem)] font-bold text-white mb-6 text-shadow-lg">
+                欢迎来到<span class="text-primary">我们的</span>服务器
+            </h1>
+            <p class="text-[clamp(1rem,2vw,1.5rem)] text-white/90 mb-10 max-w-3xl mx-auto text-shadow">
+                探索无限可能，创造属于你的世界。加入我们的社区，与其他玩家一起冒险！
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#servers" class="px-8 py-3 bg-primary hover:bg-primary/90 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105">
+                    查看服务器 <i class="fa fa-server ml-2"></i>
+                </a>
+                <a href="#contact" class="px-8 py-3 bg-transparent border-2 border-white hover:border-primary hover:text-primary text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105">
+                    联系我们 <i class="fa fa-envelope ml-2"></i>
+                </a>
+            </div>
+        </div>
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white animate-bounce">
+            <a href="#servers" class="flex flex-col items-center">
+                <span class="mb-2">下滑看看</span>
+                <i class="fa fa-chevron-down"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- 服务器介绍区域 -->
+    <section id="servers" class="py-20 bg-gradient-to-b from-dark to-dark/95">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-[clamp(1.8rem,4vw,3rem)] font-bold text-white mb-4">我们的服务器</h2>
+                <p class="text-white/70 max-w-2xl mx-auto text-lg">我们拥有两个服务器。探索两个服务器，每个都有其独特的游戏体验和功能。</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <!-- 服务器1 - 生存服务器 -->
+                <div class="bg-dark/50 border border-gray-700 rounded-xl overflow-hidden server-card">
+                    <div class="relative h-64">
+                        <img src="https://picsum.photos/id/2/800/400" alt="生存服务器宣传图" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark to-transparent"></div>
+                        <div class="absolute bottom-4 left-4">
+                            <span class="px-3 py-1 bg-primary text-white text-sm font-semibold rounded-full">生存服务器</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-3">2CS服务器 - 探索与冒险</h3>
+                        <p class="text-white/70 mb-4">在这个充满挑战的生存服务器中，你需要收集资源、建造基地、对抗怪物，并与其他玩家合作或竞争。</p>
+                        
+                        <div class="space-y-3 mb-6">
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center mr-4">
+                                    <i class="fa fa-server text-primary"></i>
+                                </div>
+                                <div>
+                                    <p class="text-white/50 text-sm">服务器地址</p>
+                                    <p class="text-white font-medium">需加入官方群聊获取</p>
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-3">
+                                <div class="bg-dark/70 p-3 rounded-lg">
+                                    <p class="text-white/50 text-xs">游戏版本</p>
+                                    <p class="text-white font-medium">1.19+</p>
+                                </div>
+                                <div class="bg-dark/70 p-3 rounded-lg">
+                                    <p class="text-white/50 text-xs">服务器内存</p>
+                                    <p class="text-white font-medium">10GB</p>
+                                </div>
+                                <div class="bg-dark/70 p-3 rounded-lg">
+                                    <p class="text-white/50 text-xs">存储空间</p>
+                                    <p class="text-white font-medium">245/270G</p>
+                                </div>
+                                <div class="bg-dark/70 p-3 rounded-lg">
+                                    <p class="text-white/50 text-xs">网络带宽</p>
+                                    <p class="text-white font-medium">100Mbps</p>
+                                </div>
+                                <div class="bg-dark/70 p-3 rounded-lg col-span-2">
+                                    <p class="text-white/50 text-xs">连接类型</p>
+                                    <p class="text-white font-medium">FRP加速(16Mbps)</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 生存服务器QQ群加入按钮 - 1016088265 -->
+                        <a href="https://qm.qq.com/q/UZPLyJp1Mm" 
+                           target="_blank" 
+                           class="block w-full py-3 bg-primary hover:bg-primary/90 text-white text-center font-semibold rounded-lg transition-all duration-300">
+                            加入QQ群 <i class="fa fa-qq ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 服务器2 - 创造服务器 -->
+                <div class="bg-dark/50 border border-gray-700 rounded-xl overflow-hidden server-card">
+                    <div class="relative h-64">
+                        <img src="https://picsum.photos/id/3/800/400" alt="创造服务器宣传图" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark to-transparent"></div>
+                        <div class="absolute bottom-4 left-4">
+                            <span class="px-3 py-1 bg-secondary text-white text-sm font-semibold rounded-full">创造服务器</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-3">生存服务器 - 自由养老</h3>
+                        <p class="text-white/70 mb-4">释放你的想象力！在这个服务器中，你可以使用无限想象来建造任何东西，展示你的建筑才华。</p>
+                        
+                        <div class="space-y-3 mb-6">
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 rounded-full bg-secondary/20 flex items-center justify-center mr-4">
+                                    <i class="fa fa-server text-secondary"></i>
+                                </div>
+                                <div>
+                                    <p class="text-white/50 text-sm">服务器地址</p>
+                                    <p class="text-white font-medium">1.197.72.113:55413</p>
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-3">
+                                <div class="bg-dark/70 p-3 rounded-lg">
+                                    <p class="text-white/50 text-xs">游戏版本</p>
+                                    <p class="text-white font-medium">1.20.1</p>
+                                </div>
+                                <div class="bg-dark/70 p-3 rounded-lg">
+                                    <p class="text-white/50 text-xs">服务器内存</p>
+                                    <p class="text-white font-medium">16GB</p>
+                                </div>
+                                <div class="bg-dark/70 p-3 rounded-lg">
+                                    <p class="text-white/50 text-xs">存储空间</p>
+                                    <p class="text-white font-medium">460/464G</p>
+                                </div>
+                                <div class="bg-dark/70 p-3 rounded-lg">
+                                    <p class="text-white/50 text-xs">网络带宽</p>
+                                    <p class="text-white font-medium">200Mbps</p>
+                                </div>
+                                <div class="bg-dark/70 p-3 rounded-lg col-span-2">
+                                    <p class="text-white/50 text-xs">连接类型</p>
+                                    <p class="text-white font-medium">FRP加速 (12Mbps)</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 生存2服务器QQ群加入按钮 - 1040592843 -->
+                        <a href="https://qm.qq.com/cgi-bin/qm/qr?k=3e8b6d2d05b4a3c8c95e5e9f9a&jump_from=webapi" 
+                           target="_blank" 
+                           class="block w-full py-3 bg-secondary hover:bg-secondary/90 text-white text-center font-semibold rounded-lg transition-all duration-300">
+                            加入QQ群 <i class="fa fa-qq ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 关于我们区域 -->
+    <section id="about" class="py-20 bg-dark/80">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-[clamp(1.8rem,4vw,3rem)] font-bold text-white mb-4">关于我们</h2>
+                <p class="text-white/70 max-w-2xl mx-auto text-lg">了解我们的服务器的理念</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h3 class="text-2xl font-bold text-white mb-6">我们的理念</h3>
+                    <p class="text-white/70 mb-6 leading-relaxed">
+                        我们致力于为玩家提供高质量、稳定且有趣的游戏体验。无论是生存冒险还是创意建造，我们的服务器都能满足你的需求。
+                    </p>
+                    <p class="text-white/70 mb-6 leading-relaxed">
+                        我们注重玩家体验，鼓励玩家之间的合作与交流。每个玩家都是我们服务器的重要组成部分，我们希望大家能在这里找到志同道合的朋友，一起创造美好的回忆。
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 mt-8">
+                        <div class="bg-dark/50 p-5 rounded-lg">
+                            <div class="text-primary text-3xl mb-2">
+                                <i class="fa fa-users"></i>
+                            </div>
+                            <h4 class="text-white font-semibold mb-1">活跃玩家</h4>
+                            <p class="text-white/60">2+</p>
+                        </div>
+                        <div class="bg-dark/50 p-5 rounded-lg">
+                            <div class="text-primary text-3xl mb-2">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <h4 class="text-white font-semibold mb-1">运营时间</h4>
+                            <p class="text-white/60">1周+</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <img src="https://picsum.photos/id/4/600/800" alt="我的世界游戏画面" class="w-full h-auto rounded-xl shadow-2xl">
+                    <div class="absolute -bottom-6 -left-6 bg-primary p-6 rounded-xl shadow-xl hidden md:block">
+                        <p class="text-white font-bold text-xl">致力于尽量提供最佳游戏体验</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 社交链接区域 -->
+            <div class="mt-20 bg-dark/50 border border-gray-700 rounded-xl p-8">
+                <h3 class="text-2xl font-bold text-white mb-8 text-center">关注我们</h3>
+                <div class="flex flex-wrap justify-center gap-6">
+                    <!-- QQ群链接（打开模态框） -->
+                    <button id="qq-groups-btn" class="flex flex-col items-center p-6 bg-dark/70 rounded-xl hover:bg-primary/20 transition-colors duration-300 w-40">
+                        <div class="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center mb-4">
+                            <i class="fa fa-qq text-3xl text-primary"></i>
+                        </div>
+                        <span class="text-white font-medium">官方QQ裙</span>
+                    </button>
+
+                    <!-- 哔哩哔哩链接 -->
+                    <a href="https://b23.tv/tN3QqGM" target="_blank" class="flex flex-col items-center p-6 bg-dark/70 rounded-xl hover:bg-primary/20 transition-colors duration-300 w-40">
+                        <div class="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center mb-4">
+                            <i class="fa fa-play-circle text-3xl text-primary"></i>
+                        </div>
+                        <span class="text-white font-medium">哔哩哔哩</span>
+                    </a>
+
+                    <!-- 抖音链接 -->
+                    <a href="https://www.douyin.com/user/wly.bsgm" target="_blank" class="flex flex-col items-center p-6 bg-dark/70 rounded-xl hover:bg-primary/20 transition-colors duration-300 w-40">
+                        <div class="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center mb-4">
+                            <i class="fa fa-music text-3xl text-primary"></i>
+                        </div>
+                        <span class="text-white font-medium">抖音</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系我们区域 -->
+    <section id="contact" class="py-20 bg-gradient-to-b from-dark/80 to-dark">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-[clamp(1.8rem,4vw,3rem)] font-bold text-white mb-4">联系我们</h2>
+                <p class="text-white/70 max-w-2xl mx-auto text-lg">有任何问题或建议？欢迎随时联系我们</p>
+            </div>
+
+            <div class="max-w-4xl mx-auto bg-dark/50 border border-gray-700 rounded-xl p-8 md:p-12">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-6">联系信息</h3>
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center mr-4 shrink-0">
+                                    <i class="fa fa-envelope text-primary"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-white font-medium mb-1">腐竹邮箱</h4>
+                                    <p class="text-white/70">
+                                        1服: 3458214934@qq.com<br>
+                                        2服: 2835209144@qq.com
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center mr-4 shrink-0">
+                                    <i class="fa fa-qq text-primary"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-white font-medium mb-1">官方QQ</h4>
+                                    <p class="text-white/70">2835209144</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center mr-4 shrink-0">
+                                    <i class="fa fa-clock-o text-primary"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-white font-medium mb-1">在线时间</h4>
+                                    <p class="text-white/70">
+                                        1服: 7*24*365<br>
+                                        2服: 全天候在线
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-10">
+                            <h4 class="text-white font-medium mb-4">关注我们</h4>
+                            <div class="flex space-x-4">
+                                <!-- QQ链接（打开模态框） -->
+                                <button id="contact-qq-btn" class="w-10 h-10 rounded-full bg-gray-800 hover:bg-primary flex items-center justify-center transition-colors duration-300">
+                                    <i class="fa fa-qq text-white"></i>
+                                </button>
+                                <!-- 哔哩哔哩链接 -->
+                                <a href="https://b23.tv/tN3QqGM" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 hover:bg-primary flex items-center justify-center transition-colors duration-300">
+                                    <i class="fa fa-play-circle text-white"></i>
+                                </a>
+                                <!-- 抖音链接 -->
+                                <a href="https://www.douyin.com/user/wly.bsgm" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 hover:bg-primary flex items-center justify-center transition-colors duration-300">
+                                    <i class="fa fa-music text-white"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-6">发送消息</h3>
+                        <!-- 表单会发送到指定邮箱 -->
+                        <form action="mailto:2835209144@qq.com" method="post" enctype="text/plain">
+                            <input type="hidden" name="cc" value="暂未知">
+                            <div class="mb-4">
+                                <label for="name" class="block text-white/70 mb-2">你的名字</label>
+                                <input type="text" id="name" name="name" class="w-full px-4 py-3 bg-dark/70 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-white" placeholder="请输入你的名字" required>
+                            </div>
+                            <div class="mb-4">
+                                <label for="email" class="block text-white/70 mb-2">电子邮箱</label>
+                                <input type="email" id="email" name="email" class="w-full px-4 py-3 bg-dark/70 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-white" placeholder="请输入你的电子邮箱" required>
+                            </div>
+                            <div class="mb-6">
+                                <label for="message" class="block text-white/70 mb-2">你的消息</label>
+                                <textarea id="message" name="message" rows="5" class="w-full px-4 py-3 bg-dark/70 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-white" placeholder="请输入你想发送的消息" required></textarea>
+                            </div>
+                            <button type="submit" class="w-full py-3 bg-primary hover:bg-primary/90 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-[1.02]">
+                                发送消息 <i class="fa fa-paper-plane ml-2"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-dark py-12 border-t border-gray-800">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
+                <div>
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
+                            <i class="fa fa-cubes text-xl text-white"></i>
+                        </div>
+                        <span class="text-xl font-bold text-white">我的世界服务器</span>
+                    </div>
+                    <p class="text-white/60 mb-6">
+                        提供舒适的游戏体验，让每一位玩家都能在这里找到属于自己的乐趣。
+                    </p>
+                    <div class="flex space-x-4">
+                        <!-- QQ链接（打开模态框） -->
+                        <button id="footer-qq-btn" class="text-white/60 hover:text-primary transition-colors duration-300">
+                            <i class="fa fa-qq"></i>
+                        </button>
+                        <!-- 哔哩哔哩链接 -->
+                        <a href="https://b23.tv/tN3QqGM" target="_blank" class="text-white/60 hover:text-primary transition-colors duration-300">
+                            <i class="fa fa-play-circle"></i>
+                        </a>
+                        <!-- 抖音链接 -->
+                        <a href="https://www.douyin.com/user/wly.bsgm" target="_blank" class="text-white/60 hover:text-primary transition-colors duration-300">
+                            <i class="fa fa-music"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-semibold mb-6">快速链接</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#home" class="text-white/60 hover:text-primary transition-colors duration-300">首页</a></li>
+                        <li><a href="#servers" class="text-white/60 hover:text-primary transition-colors duration-300">服务器</a></li>
+                        <li><a href="#about" class="text-white/60 hover:text-primary transition-colors duration-300">关于我们</a></li>
+                        <li><a href="#contact" class="text-white/60 hover:text-primary transition-colors duration-300">联系我们</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-semibold mb-6">服务器</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-white/60 hover:text-primary transition-colors duration-300">生存服务器</a></li>
+                        <li><a href="#" class="text-white/60 hover:text-primary transition-colors duration-300">创造服务器</a></li>
+                        <li><a href="#" class="text-white/60 hover:text-primary transition-colors duration-300">服务器规则</a></li>
+                        <li><a href="#" class="text-white/60 hover:text-primary transition-colors duration-300">常见问题</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-semibold mb-6">联系我们</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-center">
+                            <i class="fa fa-envelope text-primary mr-3"></i>
+                            <span class="text-white/60">2835209144@qq.com</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fa fa-qq text-primary mr-3"></i>
+                            <span class="text-white/60">2835209144</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fa fa-map-marker text-primary mr-3"></i>
+                            <span class="text-white/60">中国</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center">
+                <p class="text-white/50">&copy; 2025/7/21 All Right Reserved by wang12ling.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- QQ群模态框（新界面） -->
+    <div id="qq-groups-modal" class="fixed inset-0 z-50 hidden items-center justify-center modal-backdrop">
+        <div class="bg-dark border border-gray-700 rounded-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto m-4">
+            <div class="p-6 border-b border-gray-700 flex justify-between items-center">
+                <h3 class="text-2xl font-bold text-white">官方QQ裙</h3>
+                <button id="close-modal" class="text-white/70 hover:text-white text-2xl">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+            <div class="p-6 space-y-6">
+                <!-- 第一个QQ群 -->
+                <div class="bg-dark/50 rounded-xl p-6 border border-gray-700">
+                    <div class="flex flex-col md:flex-row items-center gap-6">
+                        <div class="w-32 h-32 bg-primary/20 rounded-lg flex items-center justify-center">
+                            <i class="fa fa-qq text-6xl text-primary"></i>
+                        </div>
+                        <div class="flex-1 text-center md:text-left">
+                            <h4 class="text-xl font-bold text-white mb-2">2CS服务器交流群(羊圈)</h4>
+                            <p class="text-white/70 mb-4">群号: 1016088265</p>
+                            <a href="https://qm.qq.com/cgi-bin/qm/qr?k=4a9a4d9d35a4f2c8a5d4d5f8f9d&jump_from=webapi" 
+                               target="_blank" 
+                               class="inline-block px-6 py-2 bg-primary hover:bg-primary/90 text-white font-semibold rounded-lg transition-all duration-300">
+                                申请加入 <i class="fa fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 第二个QQ群 -->
+                <div class="bg-dark/50 rounded-xl p-6 border border-gray-700">
+                    <div class="flex flex-col md:flex-row items-center gap-6">
+                        <div class="w-32 h-32 bg-secondary/20 rounded-lg flex items-center justify-center">
+                            <i class="fa fa-qq text-6xl text-secondary"></i>
+                        </div>
+                        <div class="flex-1 text-center md:text-left">
+                            <h4 class="text-xl font-bold text-white mb-2">创造服务器交流群</h4>
+                            <p class="text-white/70 mb-4">群号: 1040592843</p>
+                            <a href="https://qm.qq.com/cgi-bin/qm/qr?k=3e8b6d2d05b4a3c8c95e5e9f9a&jump_from=webapi" 
+                               target="_blank" 
+                               class="inline-block px-6 py-2 bg-secondary hover:bg-secondary/90 text-white font-semibold rounded-lg transition-all duration-300">
+                                申请加入 <i class="fa fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 导航栏滚动效果
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-dark/95');
+                navbar.classList.remove('bg-dark/80');
+            } else {
+                navbar.classList.add('bg-dark/80');
+                navbar.classList.remove('bg-dark/95');
+            }
+        });
+
+        // 移动端菜单切换
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            const icon = menuToggle.querySelector('i');
+            if (icon.classList.contains('fa-bars')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                // 关闭移动端菜单
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                    const icon = menuToggle.querySelector('i');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // 服务器信息复制功能
+        document.querySelectorAll('.server-card').forEach(card => {
+            const addressElement = card.querySelector('.text-white.font-medium');
+            if (addressElement && addressElement.textContent.trim() !== '需加入官方群聊获取') {
+                const address = addressElement.textContent;
+                
+                // 创建复制按钮
+                const copyButton = document.createElement('button');
+                copyButton.className = 'absolute top-4 right-4 px-3 py-1 bg-white/10 hover:bg-white/20 text-white text-xs rounded-full transition-colors duration-300';
+                copyButton.innerHTML = '<i class="fa fa-copy mr-1"></i> 复制';
+                
+                // 添加到服务器卡片
+                const cardHeader = card.querySelector('.relative');
+                cardHeader.appendChild(copyButton);
+                
+                // 复制功能
+                copyButton.addEventListener('click', () => {
+                    navigator.clipboard.writeText(address).then(() => {
+                        copyButton.innerHTML = '<i class="fa fa-check mr-1"></i> 已复制';
+                        setTimeout(() => {
+                            copyButton.innerHTML = '<i class="fa fa-copy mr-1"></i> 复制';
+                        }, 2000);
+                    });
+                });
+            }
+        });
+
+        // QQ群模态框控制
+        const modal = document.getElementById('qq-groups-modal');
+        const openModalBtns = [
+            document.getElementById('qq-groups-btn'),
+            document.getElementById('contact-qq-btn'),
+            document.getElementById('footer-qq-btn')
+        ];
+        const closeModalBtn = document.getElementById('close-modal');
+
+        // 打开模态框
+        openModalBtns.forEach(btn => {
+            if (btn) {
+                btn.addEventListener('click', () => {
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
+                    document.body.style.overflow = 'hidden'; // 防止背景滚动
+                });
+            }
+        });
+
+        // 关闭模态框
+        closeModalBtn.addEventListener('click', closeModal);
+        
+        // 点击模态框背景关闭
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        function closeModal() {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = ''; // 恢复背景滚动
+        }
+
+        // 按ESC键关闭模态框
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
